@@ -54,7 +54,6 @@ public class MovieController {
             } else {
                 System.out.println("영화에 대한 모든 리뷰:");
                 for (Rating rate : ratings) {
-                	System.out.println(rate.getUserId()+"dd"+"dd");
                 	String tmpUserName = userDAO.getUserName(rate.getUserId());
                     System.out.println("이름: " + tmpUserName + "님의 평점: "+rate.getUserRating());
                 }
