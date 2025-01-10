@@ -107,6 +107,8 @@ public class UserDAO {
 	        try (ResultSet rset = pstmt.executeQuery()) {
 	            if (rset.next()) {  // 결과가 있을 때만
 	                returnStr = rset.getString("userName");
+	            } else {
+	                System.out.println("No data found for userId: " + userId);
 	            }
 	        }
 	    }
