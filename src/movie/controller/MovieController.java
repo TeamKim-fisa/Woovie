@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.UUID;
 
 import movie.dao.RatingDAO;
+import movie.dao.UserDAO;
 import movie.model.Rating;
 
 public class MovieController {
     private final RatingDAO ratingDAO = new RatingDAO();
-    
+    private final UserDAO userDAO = new UserDAO();
+
     // 영화에 리뷰 등록
     public void registerReview(Long movieId, Long userId, Long userRating) {
         try {
@@ -51,8 +53,10 @@ public class MovieController {
                 System.out.println("해당 영화에 대한 리뷰가 없습니다.");
             } else {
                 System.out.println("영화에 대한 모든 리뷰:");
-                for (Rating rating : ratings) {
-                    System.out.println(rating);
+                for (Rating rate : ratings) {
+                	System.out.println(rate.getUserId()+"dd"+"dd");
+                	String tmpUserName = userDAO.getUserName(rate.getUserId());
+                    System.out.println("이름: " + tmpUserName + "님의 평점: "+rate.getUserRating());
                 }
             }
         } catch (SQLException e) {
