@@ -25,9 +25,9 @@ public class RatingDAO {
                 while (rset.next()) {
                     ratings.add(new Rating(
                         rset.getString("ratingId"),
-                        rset.getLong("userRating"),
                         rset.getLong("movieId"),
-                        rset.getLong("userId")
+                        rset.getLong("userId"),
+                        rset.getLong("userRating")
                     ));
                 }
             }
