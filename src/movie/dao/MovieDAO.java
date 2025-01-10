@@ -22,7 +22,7 @@ public class MovieDAO {
     }
 
     // 영화 이름, 장르, 감독, 제작국 중에 하나의 category(칼럼명)와 value(데이터값)를 받아 영화 리스트를 검색하는 메소드(Select)
-    public List<Movie> searchMovies(String category, String value) throws SQLException {
+    public static List<Movie> searchMovies(String category, String value) throws SQLException {
         List<Movie> movies = new ArrayList<>(); // 결과를 저장할 리스트 초기화
         
         StringBuilder query = new StringBuilder("SELECT * FROM movieinfo WHERE 1=1");
