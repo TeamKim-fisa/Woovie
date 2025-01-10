@@ -13,39 +13,60 @@ public class MovieDAO {
     PreparedStatement pstmt = null; 
     ResultSet rset = null; 
 
-    // 생성자: MovieDAO 객체를 생성할 때 데이터베이스 연결을 초기화
     public MovieDAO() {
         try {
-            con = DBUtil.getConnection(); // DBUtil로 데이터베이스 연결
+            con = DBUtil.getConnection();
         } catch (SQLException e) {
             e.printStackTrace(); // 연결 실패 시 예외 처리
         }
     }
 
-    // 영화 이름을 받아서 영화 리스트를 검색하는 메소드 (Select)
-    public List<Movie> searchMovies(String name) throws SQLException {
+    // 영화 이름, 장르, 감독, 제작국 중에 하나의 category(칼럼명)와 value(데이터값)를 받아 영화 리스트를 검색하는 메소드(Select)
+    public List<Movie> searchMovies(String category, String value) throws SQLException {
         List<Movie> movies = new ArrayList<>(); // 결과를 저장할 리스트 초기화
         
-        // 전체 영화 정보를 선택
         StringBuilder query = new StringBuilder("SELECT * FROM movieinfo WHERE 1=1");
-        
-        // 이름 조건 추가
-        if (name != null && !name.isEmpty()) {
-            query.append(" AND name LIKE ?");
+
+        // 카테고리 및 값 제한 
+        if (category != null && value != null && !value.isEmpty()) {
+            switch (category.toLowerCase()) {
+                case "name":
+                    query.append(" AND name LIKE ?");
+                    break;
+                case "genre":
+                    query.append(" AND genre = ?");
+                    break;
+                case "director":
+                    query.append(" AND director = ?");
+                    break;
+                case "country":
+                    query.append(" AND country = ?");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid category: " + category);
+            }
         }
 
+        Connection con = null; 
+        PreparedStatement pstmt = null; 
+        ResultSet rset = null;
+
         try {
+            con = DBUtil.getConnection();
             pstmt = con.prepareStatement(query.toString());
             int index = 1; // 쿼리 파라미터 인덱스 초기화
             
-            // 이름이 주어지면 쿼리 파라미터에 설정
-            if (name != null && !name.isEmpty()) {
-                pstmt.setString(index++, "%" + name + "%");
+            // 카테고리에 따라 쿼리 파라미터 설정
+            if (category != null && value != null && !value.isEmpty()) {
+                if (category.equalsIgnoreCase("name")) {
+                    pstmt.setString(index++, "%" + value + "%");
+                } else {
+                    pstmt.setString(index++, value);
+                }
             }
 
             rset = pstmt.executeQuery();
             while (rset.next()) {
-                // 결과 집합에서 영화 정보를 추출하여 Movie 객체 생성
                 Movie movie = new Movie(
                     rset.getLong("movieId"),
                     rset.getString("name"),
@@ -59,7 +80,6 @@ public class MovieDAO {
                 movies.add(movie);
             }
         } finally {
-        	
             if (rset != null) rset.close();
             if (pstmt != null) pstmt.close();
             if (con != null) con.close();
@@ -67,4 +87,5 @@ public class MovieDAO {
 
         return movies; // 결과는 리스트 반환
     }
+
 }
