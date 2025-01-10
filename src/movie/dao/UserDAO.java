@@ -8,7 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import movie.model.Rating;
+import movie.model.User;
 import util.DBUtil;
 
 public class UserDAO {
@@ -92,5 +96,29 @@ public class UserDAO {
 	    }
 	}
 
+	public static String getUserName(Long userId) throws SQLException {
+	    String query = "SELECT userName FROM user WHERE userId = ?";
+	    String returnStr = "";  // String 사용
+	    
+	    try (Connection con = DBUtil.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(query)) {
 
+	        pstmt.setLong(1, userId);
+	        try (ResultSet rset = pstmt.executeQuery()) {
+	            if (rset.next()) {  // 결과가 있을 때만
+	                returnStr = rset.getString("userName");
+	            } else {
+	                System.out.println("No data found for userId: " + userId);
+	            }
+	        }
+	    }
+	    
+	    return returnStr;  // 결과가 없으면 빈 문자열 반환
+	}
+
+	
+	
+	
+	
+	
 }
