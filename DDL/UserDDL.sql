@@ -1,4 +1,4 @@
-Uuse fisa
+use fisa
 
 DROP TABLE IF EXISTS user;
 
