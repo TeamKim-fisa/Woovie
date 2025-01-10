@@ -11,120 +11,117 @@ import movie.model.Rating;
 import util.DBUtil;
 
 public class RatingDAO {
-    // select: ratingId, userRating
-    public List<Rating> searchRating(String ratingId, Long userRating) throws SQLException {
+
+    // 특정 영화의 모든 리뷰 가져오기
+    public static List<Rating> findRatingsByMovieId(Long movieId) throws SQLException {
         List<Rating> ratings = new ArrayList<>();
+        String query = "SELECT * FROM rating WHERE movieId = ?";
         
-        // 쿼리: ratingId와 userRating에 대한 조건을 사용
-        StringBuilder query = new StringBuilder("SELECT * FROM rating WHERE 1=1");
-        
-        if (ratingId != null && !ratingId.isEmpty()) {
-            query.append(" AND ratingId = ?");
-        }
-        if (userRating != null) {
-            query.append(" AND userRating = ?");
-        }
-        
-        Connection con = null; 
-        PreparedStatement pstmt = null; 
-        ResultSet rset = null;
-
-        try {
-            con = DBUtil.getConnection(); // 데이터베이스 연결
-            pstmt = con.prepareStatement(query.toString());
-            int index = 1; // 쿼리 파라미터 인덱스 초기화
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
             
-            // ratingId가 주어지면 쿼리 파라미터에 설정
-            if (ratingId != null && !ratingId.isEmpty()) {
-                pstmt.setString(index++, ratingId);
+            pstmt.setLong(1, movieId);
+            try (ResultSet rset = pstmt.executeQuery()) {
+                while (rset.next()) {
+                    ratings.add(new Rating(
+                        rset.getString("ratingId"),
+                        rset.getLong("userRating"),
+                        rset.getLong("movieId"),
+                        rset.getLong("userId")
+                    ));
+                }
             }
-            // userRating이 주어지면 쿼리 파라미터에 설정
-            if (userRating != null) {
-                pstmt.setLong(index++, userRating);
-            }
-
-            rset = pstmt.executeQuery(); // 쿼리 실행
-            while (rset.next()) {
-                // 결과 집합에서 Rating 정보를 추출하여 Rating 객체 생성
-                Rating rating = new Rating(
-                    rset.getString("ratingId"),
-                    rset.getLong("userRating"),
-                    rset.getLong("movieId"),
-                    rset.getLong("userId")
-                );
-                ratings.add(rating); // 리스트에 추가
-            }
-        } finally {
-            if (rset != null) rset.close();
-            if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
         }
-
-        return ratings; // 결과 리스트 반환
+        return ratings;
     }
 
-    // insert: ratingId, movieId, userId, userRating
-    public static boolean addRating(String ratingId, Long movieId, Long userId, Long userRating) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            con = DBUtil.getConnection();
-            pstmt = con.prepareStatement("INSERT INTO rating (ratingId, movieId, userId, userRating) VALUES (?, ?, ?, ?)");
-            
-            pstmt.setString(1, ratingId);
-            pstmt.setLong(2, movieId);
-            pstmt.setLong(3, userId);
-            pstmt.setLong(4, userRating);
-
-            int result = pstmt.executeUpdate();
-
-            return result == 1; // 삽입 성공 시 true 반환
-        } finally {
-            if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
-        }
-    }
-
-    // update: userId, ratingId, userRating
-    public static boolean updateRating(Long userId, String ratingId, Long userRating) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            con = DBUtil.getConnection();
-            pstmt = con.prepareStatement("UPDATE rating SET userRating = ? WHERE userId = ? AND ratingId = ?");
-            
-            pstmt.setLong(1, userRating);
-            pstmt.setLong(2, userId);
-            pstmt.setString(3, ratingId);
-
-            int result = pstmt.executeUpdate();
-
-            return result == 1; // 업데이트 성공 시 true 반환
-        } finally {
-            if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
-        }
-    }
-
-    // delete: userId
-    public static boolean deleteRating(Long userId) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            con = DBUtil.getConnection();
-            pstmt = con.prepareStatement("DELETE FROM rating WHERE userId = ?");
+    // 특정 유저가 특정 영화에 작성한 리뷰 가져오기
+    public static List<Rating> findRatingsByUserIdAndMovieId(Long userId, Long movieId) throws SQLException {
+        List<Rating> ratings = new ArrayList<>();
+        String query = "SELECT * FROM rating WHERE userId = ? AND movieId = ?";
+        
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
             
             pstmt.setLong(1, userId);
+            pstmt.setLong(2, movieId);
+            try (ResultSet rset = pstmt.executeQuery()) {
+                while (rset.next()) {
+                    ratings.add(new Rating(
+                        rset.getString("ratingId"),
+                        rset.getLong("userRating"),
+                        rset.getLong("movieId"),
+                        rset.getLong("userId")
+                    ));
+                }
+            }
+        }
+        return ratings;
+    }
 
-            int result = pstmt.executeUpdate();
+    // 특정 유저가 작성한 모든 리뷰 가져오기
+    public static List<Rating> findRatingsByUserId(Long userId) throws SQLException {
+        List<Rating> ratings = new ArrayList<>();
+        String query = "SELECT * FROM rating WHERE userId = ?";
+        
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            
+            pstmt.setLong(1, userId);
+            try (ResultSet rset = pstmt.executeQuery()) {
+                while (rset.next()) {
+                    ratings.add(new Rating(
+                        rset.getString("ratingId"),
+                        rset.getLong("userRating"),
+                        rset.getLong("movieId"),
+                        rset.getLong("userId")
+                    ));
+                }
+            }
+        }
+        return ratings;
+    }
 
-            return result > 0; // 삭제 성공 시 true 반환
-        } finally {
-            if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
+    // 리뷰 정보 수정
+    public static boolean updateRating(String ratingId, Long userRating) throws SQLException {
+        String query = "UPDATE rating SET userRating = ? WHERE ratingId = ?";
+        
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            
+            pstmt.setLong(1, userRating);
+            pstmt.setString(2, ratingId);
+
+            return pstmt.executeUpdate() > 0;
+        }
+    }
+
+    // 리뷰 정보 삭제
+    public static boolean deleteRating(String ratingId) throws SQLException {
+        String query = "DELETE FROM rating WHERE ratingId = ?";
+        
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            
+            pstmt.setString(1, ratingId);
+
+            return pstmt.executeUpdate() > 0;
+        }
+    }
+
+    // 리뷰 정보 등록
+    public static boolean registerRating(Rating rating) throws SQLException {
+        String query = "INSERT INTO rating (ratingId, movieId, userId, userRating) VALUES (?, ?, ?, ?)";
+        
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            
+            pstmt.setString(1, rating.getRatingId());
+            pstmt.setLong(2, rating.getMovieId());
+            pstmt.setLong(3, rating.getUserId());
+            pstmt.setLong(4, rating.getUserRating());
+
+            return pstmt.executeUpdate() > 0;
         }
     }
 }

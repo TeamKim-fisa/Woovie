@@ -2,76 +2,60 @@ package movie.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
+import movie.dao.RatingDAO;
+import movie.model.Rating;
 
 /* AllRating과 UserRating 필요
  * 특정 영화에 대한 전체 레이팅 테이블의 정보 제공
  */
+import java.util.List;
+import java.util.UUID;
+
+import movie.dao.RatingDAO;
+import movie.model.Rating;
+
 public class RatingService {
-	private static final RatingService instance = new RatingService();
-	private RatingService(){}
-	
-	private static RatingService getInstance() {
-		return instance;
-	}
-	// 모든 유저가 특정 영화에 작성한 리뷰 보기
-	public List<Rating> getAllRatingInfo(Long movieId){
-		Optional<List<Rating>> allRatingInfos = RatingDao.findRatingsByMovieId(movieId);
-		if(allRatingInfos.isPresent() && ! allRatingInfos.get().isBlank()) {
-			return allRatingInfos;
-		}
-		return null;
-	}
-	// 특정 유저가 특정 영화에 작성한 리뷰 보기 
-	public List<Rating> getUserRatingInfoForMovie(Long movieId, Long userId){
-		Optional<List<Rating>> ratingInfosForMovie = RatingDao.findRatingsByMovieId(movieId, userId);
-		if(ratingInfosForMovie.isPresent() && ! ratingInfosForMovie.get().isBlank()) {
-			return ratingInfosForMovie;
-		}
-		return null;
-	}
-	// 특정 유저가 작성한 모든 리뷰 데이터 출력
-	public List<Rating> getAllUserRatingInfo(Long userId) {
-		Optional<List<Rating>> getAllRatingInfos = RatingDao.findRatingsByMovieId(userId);
-		if(getAllRatingInfos.isPresent() && ! getAllRatingInfos.get().isBlank()) {
-			return getAllRatingInfos;
-		}
-		return null;
-	}
+    private static final RatingService instance = new RatingService();
+    private RatingService() {}
 
-	// 특정 리뷰 정보(ratingId)에 대한 수정 작업 진행
-	public String updateRatingInfo(String ratingUUID) {
-		Rating updateRatingData = Rating.builder(). id(ratingUUID)..build();
-		boolean flag = RatingDao.수정함수(updateRatingData);
-		if(flag) {
-			return "수정 완료"
-		}
-		return "수정 에러";
-	}
+    public static RatingService getInstance() {
+        return instance;
+    }
 
-	// 특정 리뷰 정보(ratingId)에 대한 삭제 작업 진행
-	public String deleteRatingInfo(String ratingUUID) {
+    // 모든 유저가 특정 영화에 작성한 리뷰 보기
+    public List<Rating> getAllRatingInfo(Long movieId) throws Exception {
+        return RatingDAO.findRatingsByMovieId(movieId);
+    }
 
-		boolean flag = RatingDao.삭제(ratingUUID);
-		if(flag) {
-			return "삭제 완료"
-		}
-		
-		return "삭제 실패";
-	}
+    // 특정 유저가 특정 영화에 작성한 리뷰 보기
+    public List<Rating> getUserRatingInfoForMovie(Long movieId, Long userId) throws Exception {
+        return RatingDAO.findRatingsByUserIdAndMovieId(userId, movieId);
+    }
 
-	// 특정 영화에 대한 유저의 리뷰 등록 작업 진행
-	public String registerRatingInfo(Long movieId, Long userId)) {
-		// uuid로 리뷰 정보에 대한 키 부여
-        UUID ratingId = UUID.randomUUID();
-        Rating registerData = Rating.builder()  .build();
-        boolean flag = RatingDao.register(registerData);
-        if(flag) {
-        	return "동록 완료";
-        }
-        
-		return "등록 실패";
+    // 특정 유저가 작성한 모든 리뷰 보기
+    public List<Rating> getAllUserRatingInfo(Long userId) throws Exception {
+        return RatingDAO.findRatingsByUserId(userId);
+    }
 
-	}
-	
+    // 특정 리뷰 정보 수정
+    public String updateRatingInfo(String ratingId, Long userRating) throws Exception {
+        boolean isUpdated = RatingDAO.updateRating(ratingId, userRating);
+        return isUpdated ? "수정 완료" : "수정 실패";
+    }
+
+    // 특정 리뷰 정보 삭제
+    public String deleteRatingInfo(String ratingId) throws Exception {
+        boolean isDeleted = RatingDAO.deleteRating(ratingId);
+        return isDeleted ? "삭제 완료" : "삭제 실패";
+    }
+
+    // 특정 영화에 대한 유저의 리뷰 등록
+    public String registerRatingInfo(Long movieId, Long userId, Long userRating) throws Exception {
+        String ratingId = UUID.randomUUID().toString();
+        Rating rating = new Rating(ratingId, userRating, movieId, userId);
+        boolean isRegistered = RatingDAO.registerRating(rating);
+        return isRegistered ? "등록 완료" : "등록 실패";
+    }
 }
+
