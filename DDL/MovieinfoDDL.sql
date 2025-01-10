@@ -3,16 +3,16 @@ use fisa
 DROP TABLE IF EXISTS movieinfo;
 
 CREATE TABLE movieinfo (
-	movie_id bigint PRIMARY KEY,
+	movieID bigint PRIMARY KEY,
 	name	varchar(256),
 	rating	VARCHAR(15),
 	genre	varchar(40),
 	director varchar(40),
-	year	YEAR,
-	runtime DECIMAL(4,0),
+	year	varchar(40),
 	star	varchar(40),
 	country	varchar(40)
-);
+)
+
 
 -- 	released text,
 -- 	score	FLOAT(4,2),
