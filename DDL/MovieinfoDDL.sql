@@ -3,7 +3,7 @@ use fisa
 DROP TABLE IF EXISTS movieinfo;
 
 CREATE TABLE movieinfo (
-	movieID bigint PRIMARY KEY,
+	movieId bigint PRIMARY KEY,
 	name	varchar(256),
 	rating	VARCHAR(15),
 	genre	varchar(40),
