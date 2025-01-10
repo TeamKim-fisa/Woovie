@@ -13,8 +13,8 @@ import util.DBUtil;
 
 public class UserDAO {
 	
-	//select: 동일 userId 있는지 없는지 -> boolean
-	public static boolean checkUserExists(long userId) throws SQLException {
+	//select: 동일 userName 있는지 없는지 -> boolean
+	public static boolean checkUserExists(String userName) throws SQLException {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
 	    ResultSet rset = null;
@@ -22,8 +22,8 @@ public class UserDAO {
 	    try {
 	        con = DBUtil.getConnection();
 	        
-	        pstmt = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_id = ?");
-	        pstmt.setLong(1, userId);
+	        pstmt = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_name = ?");
+	        pstmt.setString(1, userName);
 
 	        rset = pstmt.executeQuery();
 	        if (rset.next()) {
@@ -34,22 +34,20 @@ public class UserDAO {
 	        DBUtil.close(con, pstmt, rset);
 	    }
 	    
-	    return false; //id 없으면 false, 존재하면 true
+	    return false; //userName 없으면 false, 존재하면 true
 	}
 
 	
 	
-	//insert: userId, userName -> boolean
-	public static boolean addUser(long userId, String userName) throws SQLException {
+	//insert: userName -> boolean
+	public static boolean addUser(String userName) throws SQLException {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
 	    
 	    try {
 	        con = DBUtil.getConnection();
 	        
-	        // 사용자 정보를 삽입하는 SQL 쿼리
-	        pstmt = con.prepareStatement("INSERT INTO user (user_id, user_name) VALUES (?, ?)");
-	        pstmt.setLong(1, userId);
+	        pstmt = con.prepareStatement("INSERT INTO user user_name VALUES ?");
 	        pstmt.setString(2, userName);
 
 	        int result = pstmt.executeUpdate();
