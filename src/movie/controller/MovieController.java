@@ -16,7 +16,8 @@ public class MovieController {
     public void registerReview(Long movieId, Long userId, Long userRating) {
         try {
             // 리뷰를 위한 Rating 객체 생성
-            Rating rating = new Rating(UUID.randomUUID().toString(), userRating, movieId, userId);
+        	Rating rating = Rating.builder().ratingId(UUID.randomUUID().toString()).userRating(userRating)
+        			.movieId(movieId).userId(userId).build();
             boolean result = ratingDAO.registerRating(rating);
             if (result) {
                 System.out.println("리뷰가 성공적으로 등록되었습니다.");

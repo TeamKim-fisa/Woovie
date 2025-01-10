@@ -28,7 +28,6 @@ public class RatingDAO {
                         rset.getLong("movieId"),
                         rset.getLong("userId"),
                         rset.getLong("userRating")
-
                     ));
                 }
             }
