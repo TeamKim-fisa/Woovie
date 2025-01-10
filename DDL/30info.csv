@@ -1,0 +1,31 @@
+movieID,name,rating,genre,director,year,star,country
+1,The Shining,R,Drama,Stanley Kubrick,1980,Jack Nicholson,United Kingdom
+2,The Blue Lagoon,R,Adventure,Randal Kleiser,1980,Brooke Shields,United States
+3,Star Wars: Episode V - The Empire Strikes Back,PG,Action,Irvin Kershner,1980,Mark Hamill,United States
+4,Airplane!,PG,Comedy,Jim Abrahams,1980,Robert Hays,United States
+5,Caddyshack,R,Comedy,Harold Ramis,1980,Chevy Chase,United States
+6,Friday the 13th,R,Horror,Sean S. Cunningham,1980,Betsy Palmer,United States
+7,The Blues Brothers,R,Action,John Landis,1980,John Belushi,United States
+8,Raging Bull,R,Biography,Martin Scorsese,1980,Robert De Niro,United States
+9,Superman II,PG,Action,Richard Lester,1980,Gene Hackman,United States
+10,The Long Riders,R,Biography,Walter Hill,1980,David Carradine,United States
+11,Any Which Way You Can,PG,Action,Buddy Van Horn,1980,Clint Eastwood,United States
+12,The Gods Must Be Crazy,PG,Adventure,Jamie Uys,1980,N!xau,South Africa
+13,Popeye,PG,Adventure,Robert Altman,1980,Robin Williams,United States
+14,Ordinary People,R,Drama,Robert Redford,1980,Donald Sutherland,United States
+15,Dressed to Kill,R,Crime,Brian De Palma,1980,Michael Caine,United States
+16,Somewhere in Time,PG,Drama,Jeannot Szwarc,1980,Christopher Reeve,United States
+17,Fame,R,Drama,Alan Parker,1980,Eddie Barth,United States
+18,9 to 5,PG,Comedy,Colin Higgins,1980,Jane Fonda,United States
+19,The Fog,R,Horror,John Carpenter,1980,Adrienne Barbeau,United States
+20,Stir Crazy,R,Comedy,Sidney Poitier,1980,Gene Wilder,United States
+21,Cruising,R,Crime,William Friedkin,1980,Al Pacino,West Germany
+22,Heaven's Gate,R,Adventure,Michael Cimino,1980,Kris Kristofferson,United States
+23,The Final Countdown,PG,Action,Don Taylor,1980,Kirk Douglas,United States
+24,Xanadu,PG,Fantasy,Robert Greenwald,1980,Olivia Newton-John,United States
+25,Urban Cowboy,PG,Drama,James Bridges,1980,John Travolta,United States
+26,Altered States,R,Horror,Ken Russell,1980,William Hurt,United States
+27,Little Darlings,R,Comedy,Ron Maxwell,1980,Tatum O'Neal,United States
+28,Raise the Titanic,PG,Action,Jerry Jameson,1980,Jason Robards,United Kingdom
+29,Brubaker,R,Crime,Stuart Rosenberg,1980,Robert Redford,United States
+30,American Gigolo,R,Crime,Paul Schrader,1980,Richard Gere,United States

@@ -1,9 +1,9 @@
-use fisa
+Use fisa
 
 DROP TABLE IF EXISTS user;
 
 CREATE TABLE user (
-	user_id	bigint PRIMARY KEY,
-	userName	VARCHAR(40)
+	userID	bigint PRIMARY KEY,
+	userName VARCHAR(40) unique
 )
 
