@@ -96,19 +96,36 @@ public class MovieController {
 		}
 	}
 
-	// 특정 영화 정보 조회
-	public void geMovieInfo(String category, String value) {
+
+	// 모든 영화 정보 조회
+	public void getAllMovieInfo() {
 		try {
-			List<Movie> movies = MovieService.movieInfo(category, value);
+			List<Movie> movies = MovieService.allMovieInfo();
 			if (movies.isEmpty()) {
-				System.out.println("검색어에 맞는 리뷰가 없습니다.");
+				System.out.println("영화 리스트가 없습니다.");
 			} else {
 				for (Movie m : movies) {
 					System.out.println(m.toString());
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("리뷰 조회 중 오류가 발생했습니다: " + e.getMessage());
+			System.out.println("영화 조회 중 오류가 발생했습니다: " + e.getMessage());
+		}
+	}
+
+	// 특정 영화 정보 조회
+	public void getMovieInfo(String category, String value) {
+		try {
+			List<Movie> movies = MovieService.movieInfo(category, value);
+			if (movies.isEmpty()) {
+				System.out.println("검색어에 맞는 영화가 없습니다.");
+			} else {
+				for (Movie m : movies) {
+					System.out.println(m.toString());
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("특정 영화 조회 중 오류가 발생했습니다: " + e.getMessage());
 		}
 	}
 

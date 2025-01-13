@@ -22,28 +22,31 @@ public class Main {
 	            scanner.nextLine(); // 버퍼 비우기
 
 	            switch (choice) {
-	                case 1:
+	            	case 1: 
+	            		viewAllMovie();
+	            		break;
+	                case 2:
 	                    viewMovie();
 	                    break;
-	                case 2:
+	                case 3:
 	                    registerMovieReview();
 	                    break;
-	                case 3:
+	                case 4:
 	                    updateMovieReview();
 	                    break;
-	                case 4:
+	                case 5:
 	                    deleteMovieReview();
 	                    break;
-	                case 5:
+	                case 6:
 	                    viewMovieReviews();
 	                    break;
-	                case 6:
+	                case 7:
 	                	registerUser();
 	                    break;
-	                case 7:
+	                case 8:
 	                	deleteUser();
 	                    break;
-	                case 8:
+	                case 9:
 	                    System.out.println("프로그램을 종료합니다.");
 	                    return; // 프로그램 종료
 	                default:
@@ -55,15 +58,16 @@ public class Main {
 	    // 메뉴 출력
 	    private static void showMenu() {
 	        System.out.println("\n--- 영화 리뷰 시스템 ---");
-	        System.out.println("1. 영화 검색");
-	        System.out.println("2. 영화에 대한 모든 리뷰 보기");
-	        System.out.println("3. 영화에 리뷰 등록");
-	        System.out.println("4. 리뷰 수정");
-	        System.out.println("5. 리뷰 삭제");
-	        System.out.println("6. 유저 등록");
-	        System.out.println("7. 유저 삭제");
+	        System.out.println("1. 모든 영화 검색");
+	        System.out.println("2. 검색어를 통한 영화 검색");
+	        System.out.println("3. 영화에 대한 모든 리뷰 보기");
+	        System.out.println("4. 영화에 리뷰 등록");
+	        System.out.println("5. 리뷰 수정");
+	        System.out.println("6. 리뷰 삭제");
+	        System.out.println("7. 유저 등록");
+	        System.out.println("8. 유저 삭제");
 	        
-	        System.out.println("8. 종료");
+	        System.out.println("9. 종료");
 	        System.out.print("선택: ");
 	    }
 
@@ -127,6 +131,17 @@ public class Main {
 	        }
 	    }
 	    
+	    // 모든 영화 검색 결과 보기
+	    private static void viewAllMovie() {
+	        System.out.print("모든 영화 리스트 ");
+
+	        try {
+	            movieController.getAllMovieInfo();
+	        } catch (Exception e) {
+	            System.out.println("모든 영화 검색 중 발생했습니다: " + e.getMessage());
+	        }
+	    }
+	    
 	    // 특정 영화 검색 결과 보기
 	    private static void viewMovie() {
 	        System.out.print("검색할 카테고리를 입력하세요(name, genre, director, country): ");
@@ -136,7 +151,7 @@ public class Main {
 	        scanner.nextLine(); // 버퍼 비우기
 
 	        try {
-	            movieController.geMovieInfo(category, value);
+	            movieController.getMovieInfo(category, value);
 	        } catch (Exception e) {
 	            System.out.println("특정 영화 검색 중 발생했습니다: " + e.getMessage());
 	        }

@@ -3,6 +3,7 @@
 package movie.dao;
 
 import movie.model.Movie;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,41 @@ public class MovieDAO {
         } catch (SQLException e) {
             e.printStackTrace(); // 연결 실패 시 예외 처리
         }
+    }
+    
+    // 모든 영화 정보 출력
+    public static List<Movie> searchAllMovie() throws SQLException {
+    	 
+    	 Connection con = null; 
+         PreparedStatement pstmt = null; 
+         ResultSet rset = null;
+         List<Movie> movies = null;
+         
+         try {
+        	 con = DBUtil.getConnection();
+             pstmt = con.prepareStatement("select * from movieinfo");
+             rset = pstmt.executeQuery();
+             movies = new ArrayList<>();
+             while(rset.next()) {
+            	 movies.add(Movie.builder()
+						  .movieId(rset.getLong(1))
+						  .name(rset.getString(2))
+						  .rating(rset.getString(3))
+						  .genre(rset.getString(4))
+						  .director(rset.getString(5))
+						  .year(rset.getInt(6))
+						  .star(rset.getString(7))
+						  .country(rset.getString(8))
+						  .build());
+             }
+             
+         } finally {
+        	 if (rset != null) rset.close();
+             if (pstmt != null) pstmt.close();
+             if (con != null) con.close();
+         }
+    	 
+    	return movies;
     }
 
     // 영화 이름, 장르, 감독, 제작국 중에 하나의 category(칼럼명)와 value(데이터값)를 받아 영화 리스트를 검색하는 메소드(Select)
