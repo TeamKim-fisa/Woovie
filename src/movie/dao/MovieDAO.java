@@ -2,12 +2,14 @@
  */
 package movie.dao;
 
-import movie.model.Movie;
-import movie.model.Rating;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import movie.model.Movie;
 import util.DBUtil;
 
 public class MovieDAO {

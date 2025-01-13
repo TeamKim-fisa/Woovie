@@ -1,14 +1,7 @@
 package movie.main;
 
-import java.sql.SQLException;
-import java.util.List;
 import java.util.Scanner;
 
-import movie.controller.MovieController;
-import movie.model.Rating;
-
-import movie.controller.MovieController;
-import movie.model.Rating;
 import movie.controller.MovieController;
 
 public class Main {
