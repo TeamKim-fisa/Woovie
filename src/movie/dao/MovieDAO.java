@@ -47,7 +47,6 @@ public class MovieDAO {
 						  .country(rset.getString(8))
 						  .build());
              }
-             
          } finally {
         	 if (rset != null) rset.close();
              if (pstmt != null) pstmt.close();
