@@ -96,6 +96,7 @@ public class MovieController {
 		}
 	}
 
+
 	// 모든 영화 정보 조회
 	public void getAllMovieInfo() {
 		try {
