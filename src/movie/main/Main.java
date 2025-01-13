@@ -79,7 +79,13 @@ public class Main {
 	// 특정 영화의 리뷰 보기
 	private static void viewMovieReviews() throws IOException {
 		System.out.print("영화 ID를 입력하세요: ");
-		long movieId = Long.parseLong(br.readLine());
+		long movieId = 0;
+		try {
+			Long.parseLong(br.readLine());
+		} catch (NumberFormatException e) {
+			System.out.println("잘못된 입력입니다. 숫자만 입력할 수 있습니다.");
+	        return; // 영화 ID 입력 실패 시 메서드를 종료하고 계속 진행
+	    }
 
 		try {
 			movieController.getAllReviewsForMovie(movieId);

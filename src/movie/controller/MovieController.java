@@ -25,7 +25,7 @@ public class MovieController {
 		return ratingDAO.registerRating(rating);
 	}
 
-	// 영화에 대한 특정 유저의 리뷰 조회
+	// 특정 영화에 대한 유저의 리뷰 조회
 	public void getUserReviewForMovie(Long movieId, Long userId) {
 		try {
 			List<Rating> ratings = ratingDAO.findRatingsByUserIdAndMovieId(userId, movieId);
