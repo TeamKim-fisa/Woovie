@@ -80,13 +80,11 @@
 
 ## 4-3. ERD(**Entity Relationship Diagram)**
 
-![WoovieERD_white.png](![WoovieERD_white](https://github.com/user-attachments/assets/f461572a-7672-4cfe-9b18-671fd40eb62c)
-)
+![ERD 이미지](images/WoovieERD_white.png)
 
 ## 4-4. UML(**Unified Modeling Language)** Diagram
 
-![image.png](![UMLDiagram](https://github.com/user-attachments/assets/53ae9bc7-99b2-4dfc-84ac-f689e376f1e8)
-)
+![UML 이미지](images/UMLDiagram.png)
 
 ## 4-5. Directory Structure
 
