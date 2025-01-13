@@ -18,20 +18,11 @@ public class MovieController {
 	private final MovieDAO movieDao = new MovieDAO();
 
 	// 영화에 리뷰 등록
-	public void registerReview(Long movieId, Long userId, Long userRating) {
-		try {
-			// 리뷰를 위한 Rating 객체 생성
-			Rating rating = Rating.builder().ratingId(UUID.randomUUID().toString()).userRating(userRating)
-					.movieId(movieId).userId(userId).build();
-			boolean result = ratingDAO.registerRating(rating);
-			if (result) {
-				System.out.println("리뷰가 성공적으로 등록되었습니다.");
-			} else {
-				System.out.println("리뷰 등록에 실패했습니다.");
-			}
-		} catch (SQLException e) {
-			System.out.println("리뷰 등록 중 오류가 발생했습니다: " + e.getMessage());
-		}
+	public boolean registerReview(Long movieId, Long userId, Long userRating) throws SQLException {
+		// 리뷰를 위한 Rating 객체 생성
+		Rating rating = Rating.builder().ratingId(UUID.randomUUID().toString()).userRating(userRating).movieId(movieId)
+				.userId(userId).build();
+		return ratingDAO.registerRating(rating);
 	}
 
 	// 영화에 대한 특정 유저의 리뷰 조회
