@@ -12,102 +12,77 @@ import java.sql.SQLException;
 import util.DBUtil;
 
 public class UserDAO {
-	
-	//select: 동일 userName 있는지 없는지 -> boolean
+
+	// select: 동일 userName 있는지 없는지 -> boolean
 	public static boolean checkUserExists(String userName) throws SQLException {
-	    Connection con = null;
-	    PreparedStatement pstmt = null;
-	    ResultSet rset = null;
+		String query = "SELECT COUNT(*) FROM user WHERE userName = ?";
 
-	    try {
-	        con = DBUtil.getConnection();
-	        
-	        pstmt = con.prepareStatement("SELECT COUNT(*) FROM user WHERE userName = ?");
-	        pstmt.setString(1, userName);
+		// try-with-resources를 사용하여 자원 관리
+		try (Connection con = DBUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
 
-	        rset = pstmt.executeQuery();
-	        
-	        return rset.next() && rset.getInt(1) > 0;
-	        
-	    } finally {
-	        DBUtil.close(con, pstmt, rset);
-	    }
-	    
+			pstmt.setString(1, userName);
+
+			try (ResultSet rset = pstmt.executeQuery()) {
+				return rset.next() && rset.getInt(1) > 0;
+			}
+		}
+
 	}
 
-	
-	//insert: userName -> boolean
+	// insert: userName -> boolean
 	public static boolean addUser(String userName) throws SQLException {
-	    Connection con = null;
-	    PreparedStatement pstmt = null;
-	    
-	    try {
-	        con = DBUtil.getConnection();
-	        
-	        pstmt = con.prepareStatement("INSERT INTO user (userName) VALUES (?)");
-	        pstmt.setString(1, userName);
+		String query = "INSERT INTO user (userName) VALUES (?)";
 
-	        int result = pstmt.executeUpdate();
+		// try-with-resources를 사용하여 자원 관리
+		try (Connection con = DBUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
 
-	        // 삽입 성공 여부 반환
-	        return result == 1;
-	    } finally {
-	        DBUtil.close(con, pstmt);
-	    }
+			pstmt.setString(1, userName);
+
+			int result = pstmt.executeUpdate();
+
+			// 삽입 성공 여부 반환
+			return result == 1;
+		}
 	}
 
-
-	//delete: userId행에서 있으면 삭제 -> boolean
+	// delete: userId행에서 있으면 삭제 -> boolean
 	public static boolean deleteUser(String userName) throws SQLException {
-	    Connection con = null;
-	    boolean pstmtCheck;
-	    PreparedStatement pstmtDelete = null;
+		boolean userExists = checkUserExists(userName); // 사용자 존재 여부 확인
 
-	    try {
-	        con = DBUtil.getConnection(); // 데이터베이스 연결
+		if (!userExists) {
+			return false; // 존재하지 않으면 false 반환
+		}
 
-	        // UserId가 존재하는지 확인
-	        pstmtCheck = checkUserExists(userName);
-	        
-	        if (pstmtCheck) {
-	            // UserId가 존재하면 삭제 진행
-	            pstmtDelete = con.prepareStatement("DELETE FROM user WHERE userName = ?");
-	            pstmtDelete.setString(1, userName);
-	            int result = pstmtDelete.executeUpdate();
-	            
-	            return result == 1; // 삭제 성공 시 true
-	        } else {
-	            // UserId가 존재하지 않으면 false
-	            return false; 
-	        }
-	    } finally {
-	        DBUtil.close(con, pstmtDelete);
-	    }
+		String query = "DELETE FROM user WHERE userName = ?";
+
+		// try-with-resources를 사용하여 자원 관리
+		try (Connection con = DBUtil.getConnection(); PreparedStatement pstmtDelete = con.prepareStatement(query)) {
+
+			pstmtDelete.setString(1, userName);
+
+			int result = pstmtDelete.executeUpdate();
+
+			return result == 1; // 삭제 성공 시 true 반환
+		}
 	}
 
 	public static String getUserName(Long userId) throws SQLException {
-	    String query = "SELECT userName FROM user WHERE userId = ?";
-	    String returnStr = "";  // String 사용
-	    
-	    try (Connection con = DBUtil.getConnection();
-	         PreparedStatement pstmt = con.prepareStatement(query)) {
+		String query = "SELECT userName FROM user WHERE userId = ?";
+		String returnStr = ""; // String 사용
 
-	        pstmt.setLong(1, userId);
-	        try (ResultSet rset = pstmt.executeQuery()) {
-	            if (rset.next()) {  // 결과가 있을 때만
-	                returnStr = rset.getString("userName");
-	            } else {
-	                System.out.println("No data found for userId: " + userId);
-	            }
-	        }
-	    }
-	    
-	    return returnStr;  // 결과가 없으면 빈 문자열 반환
+		try (Connection con = DBUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
+
+			pstmt.setLong(1, userId);
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if (rset.next()) { // 결과가 있을 때만
+					returnStr = rset.getString("userName");
+				} else {
+					System.out.println("No data found for userId: " + userId);
+				}
+			}
+		}
+
+		return returnStr; // 결과가 없으면 빈 문자열 반환
 	}
 
-	
-	
-	
-	
-	
 }
