@@ -14,6 +14,15 @@ import lombok.ToString;
 @Builder
 @ToString
 public class Movie {
+	
+	@Override
+	public String toString() {
+	    return String.format(
+	        "영화 ID: %d | 제목: %s | 평점: %s | 장르: %s | 감독: %s | 연도: %d | 출연: %s | 제작국: %s",
+	        movieId, name, rating.isEmpty() ? "N/A" : rating, genre, director, year, star, country
+	    );
+	}
+	
 	private long movieId; //영화 고유 id
 	private String name; //영화명
 	private String rating; //관람등급
