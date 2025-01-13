@@ -21,8 +21,7 @@
       </td>
       <td align="center">
         <a href="https://github.com/yeejkim">
-          <img src="![KakaoTalk_20250113_182156358](https://github.com/user-attachments/assets/9e25ef79-6ab3-40ec-9c5b-5b4038ff3929)
-" width="150px;" alt=""/>
+          <img src="https://github.com/user-attachments/assets/9e25ef79-6ab3-40ec-9c5b-5b4038ff3929" width="150px;" alt="KakaoTalk_20250113_182156358"/>
           <br /><sub><b> 김예진 </b></sub>
         </a>
         <br />
