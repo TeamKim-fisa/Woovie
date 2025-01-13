@@ -34,16 +34,17 @@ public class Main {
 				viewMovie();
 				break;
 			case 3:
-				registerMovieReview();
+				viewMovieReviews();
 				break;
 			case 4:
+				registerMovieReview();
+				break;
+				
+			case 5:
 				updateMovieReview();
 				break;
-			case 5:
-				deleteMovieReview();
-				break;
 			case 6:
-				viewMovieReviews();
+				deleteMovieReview();
 				break;
 			case 7:
 				registerUser();
@@ -102,7 +103,11 @@ public class Main {
 		br.readLine(); // 버퍼 비우기
 
 		try {
-			movieController.registerReview(movieId, userId, userRating);
+			if(movieController.registerReview(movieId, userId, userRating)) {
+				System.out.println("리뷰가 성공적으로 등록되었습니다.");
+			} else {
+				System.out.println("리뷰 등록에 실패했습니다.");
+			}
 
 		} catch (Exception e) {
 			System.out.println("리뷰 등록 중 오류가 발생했습니다: " + e.getMessage());
