@@ -13,20 +13,11 @@ public class UserService {
 
 	// 새로운 user 저장
 	public static boolean UserCreate(String userName) throws SQLException {
-		if (!UserDAO.checkUserExists(userName)) {
-			UserDAO.addUser(userName);
-			return true;
-
-		} else {
-			return false;
-		}
+		return !UserDAO.checkUserExists(userName) ? UserDAO.addUser(userName) : false;
 	}
 
 	// user 정보 삭제
 	public static boolean UserDelete(String userName) throws SQLException {
-		if (UserDAO.deleteUser(userName)) {
-			return true;
-		}
-		return false;
+		return UserDAO.deleteUser(userName) ?  true : false;
 	}
 }

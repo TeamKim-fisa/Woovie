@@ -20,8 +20,8 @@ import movie.model.Movie;
  * 출력 값 갯수 제한
  */
 public class MovieService {
-	private static String[] categoryArray 
-				= {"name", "genre", "director", "country"};
+//	private static String[] categoryArray 
+//				= {"name", "genre", "director", "country"};
 
 	// 모든 영화 출력
 	public static List<Movie> allMovieInfo () throws SQLException {
