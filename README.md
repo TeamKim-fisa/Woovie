@@ -1,4 +1,20 @@
 # 🎞 영화 추천 & 리뷰 \<Woovie\> ☂
+- 개발 기간: 2025.01.10 ~ 2025.01.13 
+<br>
+
+# 목차
+1. [팀원 소개](#1--팀원-소개)
+2. [기획](#2--기획)
+3. [주요 기능](#3--주요-기능)
+4. [설계](#4--설계)
+   - [개발 환경](#4-1-개발-환경)
+   - [Dataset](#4-2-dataset)
+   - [ERD(Entity Relationship Diagram)](#4-3-erdentity-relationship-diagram)
+   - [UML(Unified Modeling Language) Diagram](#4-4-umlunified-modeling-language-diagram)
+   - [Directory Structure](#4-5-directory-structure)
+6. [Trouble Shooting](#5--trouble-shooting)
+7. [고찰](#6--고찰)
+<br>
 
 # 1. 👩‍👩‍👧‍👦 팀원 소개
 
@@ -37,33 +53,38 @@
   </tbody>
 </table>
 
+<br>
+
 # 2. ⚙ 기획
 
 - 본 서비스 \<Woovie\>는 Woori와 Movie의 합성어로, 유저가 원하는 조건에 맞춘 영화 추천을 통해 더 나은 영화 경험 제공을 목표로 한다.
 - 특히 **평점 관리**에 초점을 맞춰 **유저 본인이 작성한 평점** 및 **다른 유저가 작성한 평점**을 참고하여 영화 추천에 도움을 주도록 설계하였다.
+<br>
 
-# 3. 🔩 기능
+# 3. 🔩 주요 기능
 
-- 유저
+- 유저 관리
     1. 유저 등록 (Create)
     2. 유저 삭제 (Delete)
 - 영화 조회
     1. 모든 영화 정보 조회 (Select)
     2. 특정 영화 정보 조회 (Select)
-        - name, genre, director, country
-- 리뷰 정보
+        - '영화명', '장르', '감독', '제작국'으로 조회
+- 리뷰 관리
     1. 특정 영화 리뷰 등록 (Create)
     2. 특정 영화 리뷰 수정 (Update)
     3. 특정 유저가 작성한 리뷰 조회 (Select)
     4. 특정 영화 리뷰 삭제 (Delete)
+<br>
 
 # 4. 🛠 설계
-
 ## 4-1. 개발 환경
 
 - 프로그래밍 언어: Java, SQL
-- IDE: Spring Tool Suite(STS)
 - 데이터베이스: MySQL
+- IDE: Spring Tool Suite(STS)
+- 데이터베이스 관리 도구: DBeaver
+<br>
 
 ## 4-2. Dataset
 
@@ -94,14 +115,17 @@
  
   - 데이터셋 출처
     - https://www.kaggle.com/datasets/danielgrijalvas/movies
+<br>
 
 ## 4-3. ERD(**Entity Relationship Diagram)**
 
 ![ERD 이미지](images/WoovieERD_white.png)
+<br>
 
 ## 4-4. UML(**Unified Modeling Language)** Diagram
 
 ![UML 이미지](images/UMLDiagram.png)
+<br>
 
 ## 4-5. Directory Structure
 
@@ -147,8 +171,9 @@ src
     - Main: 사용자 입력 요청 및 결과 출력
 - Util
     - DBUtil: DB 연결 위한 공통 코드
+<br>
 
-
+  
 # 5. 🧨 Trouble Shooting
 ### MySQL csv 파일 upload 
 1. DBeaver에서 CSV파일을 불러온다. 
@@ -172,6 +197,7 @@ src
 <img src="https://velog.velcdn.com/images/wild-turkey/post/fc4ecc2f-c18a-4c0f-946a-eed5378a86da/image.png" width="50%" alt="데이터 확인">
 
 - 데이터가 잘 들어가 있음을 확인할 수 있다.
+<br>
 
 # 6. ✨ 고찰
 
