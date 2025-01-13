@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import movie.controller.MovieController;
+import movie.dao.UserDAO;
 import movie.model.Movie;
 import movie.model.Rating;
 import movie.service.MovieService;
@@ -18,10 +19,23 @@ import movie.controller.MovieController;
 public class Main {
 	private static final MovieController movieController = new MovieController();
 	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+	
+	public static String loggedInUserName = null; // 유저 이름
+    public static long loggedInUserId = -1; // 유저 ID
 	public static void main(String[] args) throws IOException {
-
+		try {
+			Scanner scanner = new Scanner(System.in);
+			System.out.print("유저 이름을 입력하세요: ");
+			loggedInUserName = scanner.nextLine(); // 사용자로부터 이름 입력 받기
+			UserDAO.addUser(loggedInUserName);
+			loggedInUserId = UserDAO.getUserId(loggedInUserName);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		while (true) {
+			System.out.println("안녕하세요!" + loggedInUserName + "님");
+			System.out.println("ID : " + loggedInUserId);
 			showMenu();
 			int choice = Integer.parseInt(br.readLine());
 
@@ -33,17 +47,16 @@ public class Main {
 				viewMovie();
 				break;
 			case 3:
-				viewMovieReviews();
-				break;
-			case 4:
 				registerMovieReview();
 				break;
-				
-			case 5:
+			case 4:
 				updateMovieReview();
 				break;
-			case 6:
+			case 5:
 				deleteMovieReview();
+				break;
+			case 6:
+				viewMovieReviews();
 				break;
 			case 7:
 				registerUser();
@@ -62,6 +75,10 @@ public class Main {
 
 	// 메뉴 출력
 	private static void showMenu() {
+		
+		
+		
+		
 		System.out.println("\n--- 영화 리뷰 시스템 ---");
 		System.out.println("1. 모든 영화 검색");
 		System.out.println("2. 검색어를 통한 영화 검색");
@@ -79,13 +96,7 @@ public class Main {
 	// 특정 영화의 리뷰 보기
 	private static void viewMovieReviews() throws IOException {
 		System.out.print("영화 ID를 입력하세요: ");
-		long movieId = 0;
-		try {
-			Long.parseLong(br.readLine());
-		} catch (NumberFormatException e) {
-			System.out.println("잘못된 입력입니다. 숫자만 입력할 수 있습니다.");
-	        return; // 영화 ID 입력 실패 시 메서드를 종료하고 계속 진행
-	    }
+		long movieId = Long.parseLong(br.readLine());
 
 		try {
 			movieController.getAllReviewsForMovie(movieId);
@@ -106,11 +117,7 @@ public class Main {
 		long userRating = Long.parseLong(br.readLine());
 
 		try {
-			if(movieController.registerReview(movieId, userId, userRating)) {
-				System.out.println("리뷰가 성공적으로 등록되었습니다.");
-			} else {
-				System.out.println("리뷰 등록에 실패했습니다.");
-			}
+			movieController.registerReview(movieId, userId, userRating);
 
 		} catch (Exception e) {
 			System.out.println("리뷰 등록 중 오류가 발생했습니다: " + e.getMessage());

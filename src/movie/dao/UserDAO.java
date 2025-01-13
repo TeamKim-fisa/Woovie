@@ -29,14 +29,29 @@ public class UserDAO {
 
 	}
 
-	// insert: userName -> boolean
-	public static boolean addUser(String userName) throws SQLException {
-		String query = "INSERT INTO user (userName) VALUES (?)";
+	public static boolean checkUserIdExists(long userId) throws SQLException {
+		String query = "SELECT COUNT(*) FROM user WHERE userId = ?";
 
 		// try-with-resources를 사용하여 자원 관리
 		try (Connection con = DBUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
 
-			pstmt.setString(1, userName);
+			pstmt.setLong(1, userId); // userId 값 설정
+
+			try (ResultSet rset = pstmt.executeQuery()) {
+				return rset.next() && rset.getInt(1) > 0; // 결과가 있으면 true 반환
+			}
+		}
+	}
+
+	// insert: userName -> boolean
+	public static boolean addUser(String userName) throws SQLException {
+		String query = "INSERT INTO user (userId, userName) VALUES (?, ?)";
+
+		// try-with-resources를 사용하여 자원 관리
+		try (Connection con = DBUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
+
+			pstmt.setLong(1, 4); // userId 값을 명시적으로 설정 - Auto increasement
+			pstmt.setString(2, userName);
 
 			int result = pstmt.executeUpdate();
 
@@ -83,6 +98,25 @@ public class UserDAO {
 		}
 
 		return returnStr; // 결과가 없으면 빈 문자열 반환
+	}
+
+	public static long getUserId(String userName) throws SQLException {
+		String query = "SELECT userId FROM user WHERE userName = ?";
+		long userId = -1; // 기본값을 -1로 설정하여 유효하지 않은 ID를 반환
+
+		try (Connection con = DBUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
+
+			pstmt.setString(1, userName);
+			try (ResultSet rset = pstmt.executeQuery()) {
+				if (rset.next()) { // 결과가 있을 때만
+					userId = rset.getLong("userId");
+				} else {
+					System.out.println("No data found for userName: " + userName);
+				}
+			}
+		}
+
+		return userId; // 유저가 없으면 -1을 반환
 	}
 
 }
