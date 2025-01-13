@@ -3,6 +3,7 @@
 package movie.dao;
 
 import movie.model.Movie;
+import movie.model.Rating;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,6 +22,35 @@ public class MovieDAO {
             e.printStackTrace(); // 연결 실패 시 예외 처리
         }
     }
+    
+    public static String findMovieNameByMovieId(Long movieId) throws SQLException {
+        String query = "SELECT * FROM movieinfo WHERE movieId = ?";
+        Movie returnMovieInfo = null;
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            
+            pstmt.setLong(1, movieId);
+            try (ResultSet rset = pstmt.executeQuery()) {
+                while (rset.next()) {
+                	returnMovieInfo =Movie.builder()
+                    .movieId(rset.getLong("movieId"))    // 영화 고유 ID
+                    .name(rset.getString("name"))        // 영화명
+                    .rating(rset.getString("rating"))    // 관람 등급
+                    .genre(rset.getString("genre"))      // 장르
+                    .director(rset.getString("director"))// 감독
+                    .year(rset.getInt("year"))           // 개봉 연도
+                    .star(rset.getString("star"))        // 주연
+                    .country(rset.getString("country"))  // 제작국
+                    .build();
+                }
+            }
+        }
+        return returnMovieInfo.getName();
+    }
+
+    
+    
+    
     
     // 모든 영화 정보 출력
     public static List<Movie> searchAllMovie() throws SQLException {

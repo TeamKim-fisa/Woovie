@@ -60,10 +60,10 @@ public class Main {
 	        System.out.println("\n--- 영화 리뷰 시스템 ---");
 	        System.out.println("1. 모든 영화 검색");
 	        System.out.println("2. 검색어를 통한 영화 검색");
-	        System.out.println("3. 영화에 대한 모든 리뷰 보기");
-	        System.out.println("4. 영화에 리뷰 등록");
-	        System.out.println("5. 리뷰 수정");
-	        System.out.println("6. 리뷰 삭제");
+	        System.out.println("3. 영화에 대한 리뷰 등록");
+	        System.out.println("4. 영화 리뷰 업데이트");
+	        System.out.println("5. 영화 리뷰 삭제");
+	        System.out.println("6. 영화 리뷰 전체 보기");
 	        System.out.println("7. 유저 등록");
 	        System.out.println("8. 유저 삭제");
 	        
@@ -105,7 +105,12 @@ public class Main {
 
 	    // 리뷰 수정하기
 	    private static void updateMovieReview() {
-	        System.out.print("수정할 리뷰의 ratingId를 입력하세요: ");
+	        System.out.print("현재 유저의 Id를 입력하세요: ");
+	        long userId = scanner.nextLong();
+	        scanner.nextLine(); // 버퍼 비우기	        
+	        movieController.getAllUserMovieReview(userId);
+
+	        System.out.print("수정할 리뷰의 평점ID를 입력하세요: ");
 	        String ratingId = scanner.nextLine();
 
 	        System.out.print("새로운 평점을 입력하세요 (1-10): ");
@@ -120,9 +125,14 @@ public class Main {
 	    }
 
 	    // 리뷰 삭제하기
-	    private static void deleteMovieReview() {
-	        System.out.print("삭제할 리뷰의 ratingId를 입력하세요: ");
-	        String ratingId = scanner.nextLine();
+		private static void deleteMovieReview() {
+			System.out.print("현재 유저의 Id를 입력하세요: ");
+			long userId = scanner.nextLong();
+			scanner.nextLine(); // 버퍼 비우기
+			movieController.getAllUserMovieReview(userId);
+
+			System.out.print("삭제할 리뷰의 평점Id를 입력하세요: ");
+			String ratingId = scanner.nextLine();
 
 	        try {
 	            movieController.deleteReview(ratingId);
