@@ -4,20 +4,28 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+import movie.dao.MovieDAO;
 import movie.dao.RatingDAO;
 import movie.dao.UserDAO;
+import movie.model.Movie;
 import movie.model.Rating;
+import movie.service.MovieService;
+import movie.service.UserService;
 
 public class MovieController {
     private final RatingDAO ratingDAO = new RatingDAO();
     private final UserDAO userDAO = new UserDAO();
-
+    private final MovieDAO movieDao = new MovieDAO();
     // 영화에 리뷰 등록
     public void registerReview(Long movieId, Long userId, Long userRating) {
         try {
             // 리뷰를 위한 Rating 객체 생성
-        	Rating rating = Rating.builder().ratingId(UUID.randomUUID().toString()).userRating(userRating)
-        			.movieId(movieId).userId(userId).build();
+            Rating rating = Rating.builder()
+                    .ratingId(UUID.randomUUID().toString())
+                    .userRating(userRating)
+                    .movieId(movieId)
+                    .userId(userId)
+                    .build();
             boolean result = ratingDAO.registerRating(rating);
             if (result) {
                 System.out.println("리뷰가 성공적으로 등록되었습니다.");
@@ -53,17 +61,48 @@ public class MovieController {
             if (ratings.isEmpty()) {
                 System.out.println("해당 영화에 대한 리뷰가 없습니다.");
             } else {
+            	System.out.println();
                 System.out.println("영화에 대한 모든 리뷰:");
                 for (Rating rate : ratings) {
-                	String tmpUserName = userDAO.getUserName(rate.getUserId());
-                    System.out.println("이름: " + tmpUserName + "님의 평점: "+rate.getUserRating());
+                    String tmpUserName = userDAO.getUserName(rate.getUserId());
+                    System.out.println("이름: " + tmpUserName + "님의 평점: " + rate.getUserRating());
                 }
             }
         } catch (SQLException e) {
             System.out.println("리뷰 조회 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
+    
+	public void getAllUserMovieReview(Long userId) {
+		try {
+			List<Rating> userRatings = ratingDAO.findRatingsByUserId(userId);
+			if (userRatings.isEmpty()) {
+				System.out.println("해당 유저가 작성한 리뷰가 존재하지 않습니다.");
+			} else {
+				System.out.println();
+				System.out.println("유저가 작성한 모든 리뷰 정보:");
+				StringBuilder buildString = new StringBuilder("");
+				for (Rating rate : userRatings) {
+					buildString.append("평점ID: " + rate.getRatingId());
+					buildString.append("영화명: " + MovieDAO.findMovieNameByMovieId(rate.getMovieId()));
+					buildString.append("평점: " + rate.getUserRating());
+					buildString.append("\n");
+				}
+				System.out.println(buildString.toString());
+			}
+		} catch (SQLException e) {
+			System.out.println("유저의 리뷰 조회 중 예상치 못한 오류가 발생했습니다: " + e.getMessage());
+			e.printStackTrace();
+		}
+		System.out.println();
 
+	}
+    
+    
+    
+    
+    
+    
     // 특정 리뷰 수정
     public void updateReview(String ratingId, Long userRating) {
         try {
@@ -89,6 +128,66 @@ public class MovieController {
             }
         } catch (SQLException e) {
             System.out.println("리뷰 삭제 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 모든 영화 정보 조회
+    public void getAllMovieInfo() {
+        try {
+            List<Movie> movies = MovieService.allMovieInfo();
+            if (movies.isEmpty()) {
+                System.out.println("영화 리스트가 없습니다.");
+            } else {
+                for (Movie m : movies) {
+                    System.out.println(m.toString());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("영화 조회 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 특정 영화 정보 조회
+    public void getMovieInfo(String category, String value) {
+        try {
+            List<Movie> movies = MovieService.movieInfo(category, value);
+            if (movies.isEmpty()) {
+                System.out.println("검색어에 맞는 영화가 없습니다.");
+            } else {
+                for (Movie m : movies) {
+                    System.out.println(m.toString());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("특정 영화 조회 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 유저 등록
+    public void userCreate(String userName) {
+        try {
+            boolean result = UserService.UserCreate(userName);
+            if (result) {
+                System.out.println("유저가 성공적으로 등록되었습니다.");
+            } else {
+                System.out.println("유저 등록에 실패했습니다.");
+            }
+        } catch (SQLException e) {
+            System.out.println("유저 등록 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 특정 사용자 삭제
+    public void deleteUser(String userName) {
+        try {
+            boolean result = UserService.UserDelete(userName);
+            if (result) {
+                System.out.println(userName + "님의 정보가 성공적으로 삭제되었습니다.");
+            } else {
+                System.out.println("유저 삭제에 실패했습니다.");
+            }
+        } catch (SQLException e) {
+            System.out.println("유저 삭제 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
 }
