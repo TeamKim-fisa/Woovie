@@ -50,7 +50,33 @@ public class MovieController {
 			System.out.println("리뷰 조회 중 오류가 발생했습니다: " + e.getMessage());
 		}
 	}
+	
+	// 단일 유저가 작성한 모든 리뷰 조회
+	public void getAllReviewByUser(Long userId) {
+		try {
+			List<Rating> ratings = ratingDAO.findRatingsByUserId(userId);
+			if (ratings.isEmpty()) {
+				System.out.println("유저가 작성한 리뷰가 존재하지 않습니다.");
+			} else {
+				System.out.println();
+				String tmpUserName = userDAO.getUserName(userId);
 
+				System.out.println("------" + tmpUserName+ "가 작성한 리뷰 리스트------");
+
+				StringBuilder sb = new StringBuilder("");
+				for (Rating rate : ratings) {
+					sb.append("영화명: " + MovieDAO.findMovieNameByMovieId(rate.getMovieId()));
+					sb.append("  평점: " + rate.getMovieId());
+					sb.append("  리뷰ID: " + rate.getRatingId());
+					sb.append("\n");
+				}
+				System.out.println(sb.toString());
+			}
+		} catch (SQLException e) {
+			System.out.println("리뷰 조회 중 오류가 발생했습니다: " + e.getMessage());
+		}
+	}
+	
 	// 영화에 대한 모든 유저의 리뷰 조회
 	public void getAllReviewsForMovie(Long movieId) {
 		try {

@@ -24,7 +24,6 @@ public class Main {
 		while (true) {
 			showMenu();
 			int choice = Integer.parseInt(br.readLine());
-			br.readLine(); // 버퍼 비우기
 
 			switch (choice) {
 			case 1:
@@ -80,7 +79,6 @@ public class Main {
 	private static void viewMovieReviews() throws IOException {
 		System.out.print("영화 ID를 입력하세요: ");
 		long movieId = Long.parseLong(br.readLine());
-		br.readLine(); // 버퍼 비우기
 
 		try {
 			movieController.getAllReviewsForMovie(movieId);
@@ -99,7 +97,6 @@ public class Main {
 
 		System.out.print("평점을 입력하세요 (1-10): ");
 		long userRating = Long.parseLong(br.readLine());
-		br.readLine(); // 버퍼 비우기
 
 		try {
 			movieController.registerReview(movieId, userId, userRating);
@@ -111,12 +108,15 @@ public class Main {
 
 	// 리뷰 수정하기
 	private static void updateMovieReview() throws IOException {
-		System.out.print("수정할 리뷰의 ratingId를 입력하세요: ");
+		System.out.print("유저 ID를 입력해주세요");
+		String userId = br.readLine();
+		movieController.getAllReviewByUser(Long.parseLong(userId));
+		
+		System.out.print("수정할 리뷰의 리뷰ID를 입력하세요: ");
 		String ratingId = br.readLine();
-
+		
 		System.out.print("새로운 평점을 입력하세요 (1-10): ");
 		long userRating = Long.parseLong(br.readLine());
-		br.readLine(); // 버퍼 비우기
 
 		try {
 			if(movieController.updateReview(ratingId, userRating)) {
@@ -132,10 +132,13 @@ public class Main {
 
 	// 리뷰 삭제하기
 	private static void deleteMovieReview() throws IOException {
-		System.out.print("삭제할 리뷰의 ratingId를 입력하세요: ");
+		System.out.print("유저 ID를 입력해주세요");
+		String userId = br.readLine();
+		movieController.getAllReviewByUser(Long.parseLong(userId));
+		
+		System.out.print("삭제할 리뷰의 리뷰ID를 입력하세요: ");
 		String ratingId = br.readLine();
-		br.readLine();
-
+		
 		try {
 			if(movieController.deleteReview(ratingId)) {
 				System.out.println("리뷰가 성공적으로 삭제되었습니다.");
@@ -173,7 +176,6 @@ public class Main {
 		String category = br.readLine();
 		System.out.print("검색어를 입력하세요: ");
 		String value = br.readLine();
-		br.readLine(); // 버퍼 비우기
 
 		try {
 			List<Movie> movies = movieController.getMovieInfo(category, value);
@@ -194,7 +196,6 @@ public class Main {
 	private static void registerUser() throws IOException {
 		System.out.print("유저 name을 입력하세요: ");
 		String username = br.readLine();
-		br.readLine(); // 버퍼 비우기
 
 		try {
 			if (movieController.userCreate(username)) {
@@ -211,7 +212,6 @@ public class Main {
 	private static void deleteUser() throws IOException {
 		System.out.print("삭제할 유저의 name을 입력하세요: ");
 		String userName = br.readLine();
-		br.readLine(); // 버퍼 비우기
 
 		try {
 			if(movieController.deleteUser(userName)) {
@@ -224,6 +224,4 @@ public class Main {
 			System.out.println("유저 삭제 중 오류가 발생했습니다: " + e.getMessage());
 		}
 	}
-	
-	
 }
