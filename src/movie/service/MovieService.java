@@ -28,17 +28,11 @@ public class MovieService {
 	 * select * from movie;
 	 * MovieDAO에 selectAllMovie가 있다고 가정
 	 */
-//	public static Movie allMovieinfo () {
-//		return  MovieDAO.selectAllMovie();
-//	}
+	public static List<Movie> allMovieInfo () throws SQLException {
+		return MovieDAO.searchAllMovie();
+	}
 	
-	/*
-	 * 사용자가 영화명, 장르 등의 카테고리를 넘겨주면,
-	 * (만약 view에서 숫자로 입력받으면 int category하고, case 구분 로직 구현)
-	 * 
-	 * select * from movie where ? = ? 에서 ?에 들어갈 것
-	 * 
-	 */
+	// 특정 영화 출력
 	public static List<Movie> movieInfo(String category, String value) throws SQLException {
 		
 		// 카테고리 존재 여부 확인
