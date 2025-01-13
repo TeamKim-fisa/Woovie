@@ -13,8 +13,6 @@ public class UserService {
 
 	// 새로운 user 저장
 	public static boolean UserCreate(String userName) throws SQLException {
-
-		
 		if (!UserDAO.checkUserExists(userName)) {
 			UserDAO.addUser(userName);
 			return true;
@@ -22,7 +20,6 @@ public class UserService {
 		} else {
 			return false;
 		}
-
 	}
 
 	// user 정보 삭제
