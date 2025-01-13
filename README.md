@@ -2,10 +2,40 @@
 
 # 1. 👩‍👩‍👧‍👦 팀원 소개
 
-- 김지훈
-- 김우현
-- 김예진
-- 김소연
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+         <a href=https://github.com/wild-turkey>
+          <img src="" width="150px;" alt=""/>
+          <br /><sub><b> 김지훈 </b></sub>
+        </a>
+        <br />
+      </td>
+      <td align="center">
+          <a href="https://github.com/woody6624">
+          <img src="" width="150px;" alt=""/>
+          <br /><sub><b> 김우현 </b></sub>
+        </a>
+        <br />
+      </td>
+      <td align="center">
+        <a href="https://github.com/yeejkim">
+          <img src="" width="150px;" alt=""/>
+          <br /><sub><b> 김예진 </b></sub>
+        </a>
+        <br />
+      </td>
+      <td align="center">
+        <a href="https://github.com/ssoyeonni">
+          <img src="" width="150px;" alt=""/>
+          <br /><sub><b> 김소연 </b></sub>
+        </a>
+        <br />
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 # 2. ⚙ 기획
 
