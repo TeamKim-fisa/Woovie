@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import movie.controller.MovieController;
+import movie.dao.UserDAO;
 import movie.model.Movie;
 import movie.model.Rating;
 import movie.service.MovieService;
@@ -18,10 +19,23 @@ import movie.controller.MovieController;
 public class Main {
 	private static final MovieController movieController = new MovieController();
 	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+	
+	public static String loggedInUserName = null; // 유저 이름
+    public static long loggedInUserId = -1; // 유저 ID
 	public static void main(String[] args) throws IOException {
-
+		try {
+			Scanner scanner = new Scanner(System.in);
+			System.out.print("유저 이름을 입력하세요: ");
+			loggedInUserName = scanner.nextLine(); // 사용자로부터 이름 입력 받기
+			UserDAO.addUser(loggedInUserName);
+			loggedInUserId = UserDAO.getUserId(loggedInUserName);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		while (true) {
+			System.out.println("안녕하세요!" + loggedInUserName + "님");
+			System.out.println("ID : " + loggedInUserId);
 			showMenu();
 			int choice = Integer.parseInt(br.readLine());
 
@@ -61,6 +75,10 @@ public class Main {
 
 	// 메뉴 출력
 	private static void showMenu() {
+		
+		
+		
+		
 		System.out.println("\n--- 영화 리뷰 시스템 ---");
 		System.out.println("1. 모든 영화 검색");
 		System.out.println("2. 검색어를 통한 영화 검색");
