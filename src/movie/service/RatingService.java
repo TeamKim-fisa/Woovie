@@ -53,8 +53,7 @@ public class RatingService {
     // 특정 영화에 대한 유저의 리뷰 등록
     public String registerRatingInfo(Long movieId, Long userId, Long userRating) throws Exception {
         String ratingId = UUID.randomUUID().toString();
-        Rating rating = new Rating(ratingId, userRating, movieId, userId);
-        boolean isRegistered = RatingDAO.registerRating(rating);
+        boolean isRegistered = RatingDAO.registerRating(new Rating(ratingId, userRating, movieId, userId));
         return isRegistered ? "등록 완료" : "등록 실패";
     }
 }
