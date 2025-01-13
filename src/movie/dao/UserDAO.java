@@ -30,18 +30,15 @@ public class UserDAO {
 	        pstmt.setString(1, userName);
 
 	        rset = pstmt.executeQuery();
-	        if (rset.next()) {
-	            // COUNT(*) 결과가 1 이상이면 존재
-	            return rset.getInt(1) > 0; 
-	        }
+	        
+	        return rset.next() && rset.getInt(1) > 0;
+	        
 	    } finally {
 	        DBUtil.close(con, pstmt, rset);
 	    }
 	    
-	    return false; //userName 없으면 false, 존재하면 true
 	}
 
-	
 	
 	//insert: userName -> boolean
 	public static boolean addUser(String userName) throws SQLException {
@@ -67,32 +64,28 @@ public class UserDAO {
 	//delete: userId행에서 있으면 삭제 -> boolean
 	public static boolean deleteUser(String userName) throws SQLException {
 	    Connection con = null;
-	    PreparedStatement pstmtCheck = null;
+	    boolean pstmtCheck;
 	    PreparedStatement pstmtDelete = null;
-	    ResultSet rset = null;
 
 	    try {
 	        con = DBUtil.getConnection(); // 데이터베이스 연결
 
-	        // UserId가 존재하는지 확인하는 쿼리
-	        pstmtCheck = con.prepareStatement("SELECT COUNT(*) FROM user WHERE userName = ?");
-	        pstmtCheck.setString(1, userName);
+	        // UserId가 존재하는지 확인
+	        pstmtCheck = checkUserExists(userName);
 	        
-	        rset = pstmtCheck.executeQuery();
-	        if (rset.next() && rset.getInt(1) > 0) {
+	        if (pstmtCheck) {
 	            // UserId가 존재하면 삭제 진행
 	            pstmtDelete = con.prepareStatement("DELETE FROM user WHERE userName = ?");
 	            pstmtDelete.setString(1, userName);
-	            pstmtDelete.executeUpdate();
+	            int result = pstmtDelete.executeUpdate();
 	            
-	            return true; // 삭제 성공 시 true
+	            return result == 1; // 삭제 성공 시 true
 	        } else {
 	            // UserId가 존재하지 않으면 false
 	            return false; 
 	        }
 	    } finally {
-	        DBUtil.close(con, pstmtCheck, rset);
-	        DBUtil.close(null, pstmtDelete, null);
+	        DBUtil.close(con, pstmtDelete);
 	    }
 	}
 
