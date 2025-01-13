@@ -134,8 +134,25 @@ src
 
 # 5. 🧨 Trouble Shooting
 
-- 데이터베이스 연결 오류
-    - 
+- DBeaver에서 CSV파일 불러오기
+    - ![](https://velog.velcdn.com/images/wild-turkey/post/074494a3-d784-45ea-9d9a-92edb0aeb19b/image.png)
+
+원하는 데이터베이스를 선택하고 우클릭하여 데이터 가져오기를 선택한다
+![](https://velog.velcdn.com/images/wild-turkey/post/332da513-257c-4dee-a023-001eb6b7578c/image.png)
+csv에서 가져오기를 선택하고 원하는 csv파일을 탐색기에서 설정한다
+
+![](https://velog.velcdn.com/images/wild-turkey/post/b00c41e3-7f6b-4016-9253-149456475359/image.png)
+
+우측상단의 configure를 클릭하고 DB와 csv의 열이 존재하는지 확인한다
+
+(생략해도 되지만 이때 DB의 Column과 csv의 Column이 일치하는지 확인하는 과정이다)
+
+![](https://velog.velcdn.com/images/wild-turkey/post/c6e45edf-1081-4a32-b015-4e3be3f48af0/image.png)
+진행을 눌러 마무리 한다
+
+![](https://velog.velcdn.com/images/wild-turkey/post/fc4ecc2f-c18a-4c0f-946a-eed5378a86da/image.png)
+데이터가 잘 들어가 있음을 확인할 수 있다
+
 
 # 6. ✨ 고찰
 
