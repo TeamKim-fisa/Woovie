@@ -7,7 +7,7 @@
     <tr>
       <td align="center">
          <a href=https://github.com/wild-turkey>
-          <img src="" width="150px;" alt=""/>
+          <img src="https://github.com/user-attachments/assets/8a50b6ef-2a2e-404c-8b23-c6f124f0fff5" width="150px;" alt=""/>
           <br /><sub><b> 김지훈 </b></sub>
         </a>
         <br />
