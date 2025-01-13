@@ -1,17 +1,5 @@
 # 🎞 영화 추천 프로그램 \<Woovie\> ☂
 
-### 목차
-- [1. 👩‍👩‍👧‍👦 팀원 소개](#1-팀원-소개)
-- [2. ⚙ 기획](#2-기획)
-- [3. 🔩 기능](#3-기능)
-- [4. 🛠 설계](#4-설계)
-  - [4-1. 개발 환경](#4-1-개발-환경)
-  - [4-2. 데이터셋](#4-2-데이터셋)
-  - [4-3. ERD(**Entity-Relationship-Diagram**)](#4-3-erdentity-relationship-diagram)
-  - [4-4. UML(**Unified-Modeling-Language**)-Diagram](#4-4-umlunified-modeling-language-diagram)
-  - [4-5. Directory-Structure](#4-5-directory-structure)
-- [5. 🧨 Trouble Shooting](#5-trouble-shooting)
-- [6. ✨ 고찰](#6-고찰)
 
 # 1. 👩‍👩‍👧‍👦 팀원 소개
 
@@ -133,28 +121,28 @@ src
 
 
 # 5. 🧨 Trouble Shooting
-
-- DBeaver에서 CSV파일 불러오기
+### MySQL csv 파일 upload 
+1. DBeaver에서 CSV파일을 불러온다. 
 
 <img src="https://velog.velcdn.com/images/wild-turkey/post/074494a3-d784-45ea-9d9a-92edb0aeb19b/image.png" alt="CSV파일 불러오기">
 
-원하는 데이터베이스를 선택하고 우클릭하여 데이터 가져오기를 선택한다.
+2. 원하는 데이터베이스를 선택하고 우클릭하여 데이터 가져오기를 선택한다.
 
 <img src="https://velog.velcdn.com/images/wild-turkey/post/332da513-257c-4dee-a023-001eb6b7578c/image.png" width="50%" alt="데이터베이스 가져오기">
 
-CSV에서 가져오기를 선택하고 원하는 CSV 파일을 탐색기에서 설정한다.
+3. CSV에서 가져오기를 선택하고 원하는 CSV 파일을 탐색기에서 설정한다.
 
 <img src="https://velog.velcdn.com/images/wild-turkey/post/b00c41e3-7f6b-4016-9253-149456475359/image.png" width="50%" alt="CSV 파일 설정">
 
-우측 상단의 Configure를 클릭하고 DB와 CSV의 열이 존재하는지 확인한다.
+4. 우측 상단의 Configure를 클릭하고 DB와 CSV의 열이 존재하는지 확인한다.
 
 <img src="https://velog.velcdn.com/images/wild-turkey/post/c6e45edf-1081-4a32-b015-4e3be3f48af0/image.png" width="50%" alt="열 확인">
 
-진행을 눌러 마무리한다.
+5. 진행을 눌러 마무리한다.
 
 <img src="https://velog.velcdn.com/images/wild-turkey/post/fc4ecc2f-c18a-4c0f-946a-eed5378a86da/image.png" width="50%" alt="데이터 확인">
 
-데이터가 잘 들어가 있음을 확인할 수 있다.
+- 데이터가 잘 들어가 있음을 확인할 수 있다.
 
 # 6. ✨ 고찰
 
