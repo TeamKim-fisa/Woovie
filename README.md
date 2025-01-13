@@ -28,7 +28,7 @@
       </td>
       <td align="center">
         <a href="https://github.com/ssoyeonni">
-          <img src="" width="150px;" alt=""/>
+          <img src="https://avatars.githubusercontent.com/u/165532198?s=400&u=0c79ae7564bc07992c20527640ed3abab632dc15&v=4" width="150px;" alt=""/>
           <br /><sub><b> 김소연 </b></sub>
         </a>
         <br />
