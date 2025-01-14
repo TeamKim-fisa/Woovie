@@ -10,8 +10,8 @@
    - [개발 환경](#4-1-개발-환경)
    - [Dataset](#4-2-dataset)
    - [ERD(Entity Relationship Diagram)](#4-3-erdentity-relationship-diagram)
-   - [UML(Unified Modeling Language) Diagram](#4-4-umlunified-modeling-language-diagram)
-   - [Directory Structure](#4-5-directory-structure)
+   - [Software Architecture](#4-4-software-architecture)
+   - [Project Structure](#4-5-project-structure)
 6. [Trouble Shooting](#5--trouble-shooting)
 7. [고찰](#6--고찰)
 <br>
@@ -90,7 +90,8 @@
 
 - Movie Industry
   
-    - Kaggle Dataset 
+    - Kaggle Dataset
+      - https://www.kaggle.com/datasets/danielgrijalvas/movies 
     - 1986~2016년 사이 6820개의 IMDb 영화 데이터셋
     
     | 칼럼명 | 설명 | 데이터 타입 |
@@ -112,9 +113,6 @@
     | runtime | 상영 시간 | float64 |
     - 위 데이터셋에서 name, rating, genre, director, year, star, country 총 7개의 칼럼을 선정하여 30개의 데이터 사용
     - movieinfo.csv 파일 사용
- 
-  - 데이터셋 출처
-    - https://www.kaggle.com/datasets/danielgrijalvas/movies
 <br>
 
 ## 4-3. ERD(**Entity Relationship Diagram)**
@@ -122,12 +120,12 @@
 ![ERD 이미지](images/WoovieERD_white.png)
 <br>
 
-## 4-4. UML(**Unified Modeling Language)** Diagram
+## 4-4. Software Architecture
 
 ![UML 이미지](images/UMLDiagram.png)
 <br>
 
-## 4-5. Directory Structure
+## 4-5. Project Structure
 
 ```bash
 src
